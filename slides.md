@@ -12,7 +12,7 @@ background: linear-gradient(135deg, #1a1a40 0%, #2a4066 100%)
 # Slide transitions for dynamic feel
 transition: slide-up
 addons:
-  - naive
+  # - naive
 naive:
   # see https://naiveui.com/en-US/os-theme/docs/customize-theme
   common:
@@ -31,10 +31,6 @@ naive:
   <p class="text-xl text-gray-300 mt-4">Privacy for Transactions, Compliance for All</p>
   <p class="text-sm text-gray-400">Presented by pupplecat | May 3, 2025</p>
 </div>
-
-<!--
-Welcome the audience. Mention the online format and encourage chat interaction. Set the stage: "Today, we’ll explore how Solana hides transaction amounts."
--->
 
 ---
 layout: default
@@ -61,10 +57,6 @@ transition: slide-up
 8. Q&A
 ```
 
-<!--
-Outline the 45-min plan: 30 min slides, 10 min demo, 5 min Q&A. Encourage chat: “Type ‘Hi’ if you’re excited for the demo!”
--->
-
 ---
 layout: default
 transition: slide-up
@@ -72,29 +64,25 @@ transition: slide-up
 # SPL Token
 
 ```text
+                                                     ┌───────────┐
+ SPL Token                                           │   Token   │                    ◄─────   Program Account
+                                                     └─────┬─────┘
+  - mint                                                   │
+  - transfer                                        own    │    own
+                                               ┌───────────┴───────────┐
+                                               │                       │
+                                         ┌─────▼──────┐          ┌─────▼──────┐
+                                         │    Mint    │          │  Account   │       ◄─────   State Account
+                                         └────────────┘          └────────────┘
 
-                                                      ┌───────────┐
- SPL Token                                            │   Token   │                   ◄─────   Program Account
-                                                      └─────┬─────┘
-  - mint                                                    │
-  - transfer                                         own    │    own
-                                                ┌───────────┴───────────┐
-                                                │                       │
-                                          ┌─────▼──────┐          ┌─────▼──────┐
-                                          │    Mint    │          │  Account   │      ◄─────   State Account
-                                          └────────────┘          └────────────┘
+                                          - supply                 - mint
+                                          - authority              - owner            ◄-----   Logical Owner
+                                          - decimals               - amount
+                                                                   - delegate
 
-                                           - supply                 - mint
-                                           - authority              - owner           ◄-----   Logical Owner
-                                           - decimals               - amount
-                                                                    - delegate
-
+                                   Program ID: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
 ```
 
-
-<!--
-Explain Solana’s speed and SPL basics. Use the diagram to show the token transfer flow: Program Account mints to Mint, owns Accounts A and B, with a 10,000 token transfer. Ask: “Who’s built on Solana? Share in the chat!” Point to the diagram with annotations to highlight key parts (e.g., Mint, transfer arrow).
--->
 
 ---
 layout: image-right
@@ -114,10 +102,6 @@ transition: slide-up
 <div class="text-sm italic mt-4 animate-pulse">
   “Privacy for payments, transparency for regulators.”
 </div>
-
-<!--
-Highlight the transparency problem. Use the image to show a public transfer with visible amounts. Segue to Token2022 as the solution.
--->
 
 ---
 layout: default
@@ -148,10 +132,6 @@ transition: slide-up
 
                                    Program ID: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
 ```
-
-<!--
-Contrast SPL’s limitations with Token2022’s features. Show a diagram of extended mint storage if time allows. Mention privacy as a key upgrade.
--->
 
 ---
 layout: default
@@ -186,9 +166,6 @@ transition: slide-up
                             └─────────────────┘ ─────────────────────────────────► └─────────────────┘
 ```
 
-<!--
-Explain confidentiality vs. anonymity. Use the image to show extended storage (public/encrypted balances). Preview the demo: “We’ll hide an amount soon!”
--->
 
 ---
 layout: center
@@ -199,32 +176,32 @@ transition: zoom
 
 <div class="grid grid-cols-2 gap-6">
   <div class="bg-white bg-opacity-10 p-4 rounded-lg shadow-lg">
-    <h3 class="font-bold">Encryption</h3>
+    <h3 class="font-bold text-lg">Zero-Knowledge Proofs in CT</h3>
     <ul class="text-sm">
-      <li>ElGamal: Hides balances</li>
-      <li>AE Keys: Secure transfers</li>
+      <li><strong>Bulletproofs</strong>: Prove validity without revealing amounts</li>
+      <li><strong>Range Proof</strong>: Ensures balance ≥ 0 and < 2⁶⁴</li>
+      <li><strong>Equality Proof</strong>: Confirms sender amount = receiver amount</li>
     </ul>
   </div>
   <div class="bg-white bg-opacity-10 p-4 rounded-lg shadow-lg">
-    <h3 class="font-bold">Zero-Knowledge Proofs</h3>
+    <h3 class="font-bold text-lg">Role of ElGamal Key</h3>
     <ul class="text-sm">
-      <li>Bulletproofs: Range/equality</li>
-      <li>zk_elgamal_proof_program_id</li>
+      <li><strong>Encryption</strong>: Hides balances and transfer amounts</li>
+      <li><strong>Homomorphic</strong>: Allows encrypted arithmetic (e.g., additions)</li>
+      <li><strong>Public Key</strong>: Used by sender/receiver for secure data</li>
+    </ul>
+  </div>
+  <div class="bg-white bg-opacity-10 p-4 rounded-lg shadow-lg">
+    <h3 class="font-bold text-lg">Role of AE Key</h3>
+    <ul class="text-sm">
+      <li><strong>Access Encryption</strong>: Secures transfer proposals</li>
+      <li><strong>Decryption</strong>: Allows receiver to unlock encrypted amounts</li>
+      <li><strong>Confidentiality</strong>: Prevents unauthorized viewing</li>
     </ul>
   </div>
 </div>
 
-```mermaid
-graph TD
-  A[Sender] -->|ElGamal Encrypt| B[Encrypted Amount]
-  B -->|Bulletproofs| C[Range Proof]
-  B -->|Bulletproofs| D[Equality Proof]
-  D --> E[Receiver]
-```
 
-<!--
-Simplify crypto: “ElGamal locks the amount, Bulletproofs prove it’s valid.” Use the Mermaid diagram to show the flow. Keep it brief for non-developers.
--->
 
 ---
 layout: image-left
@@ -246,9 +223,6 @@ image: https://via.placeholder.com/400x600.png?text=Use+Cases
   - Limited wallet support
   - Extension conflicts
 
-<!--
-Highlight real-world examples (Paxos). Acknowledge challenges for credibility. Ask: “What use cases do you see? Share in the chat!”
--->
 
 ---
 layout: center
@@ -272,9 +246,6 @@ transition: fade
 
 <img src="https://via.placeholder.com/300x200.png?text=Encrypted+Transfer" class="w-48 mx-auto mt-4 animate-pulse" />
 
-<!--
-Set up excitement: “We’ll prove the amount is invisible!” Share terminal, use annotations, and show the Explorer mockup. Engage: “Guess the amount in the chat!”
--->
 
 ---
 layout: center
@@ -292,10 +263,6 @@ transition: zoom
 </div>
 
 <img src="https://solana.com/branding/logomark.png" class="w-24 mx-auto mt-8 animate-spin-slow" />
-
-<!--
-Recap the demo: “We hid the amount!” Encourage exploration of Token2022. Transition to Q&A.
--->
 
 ---
 layout: center
@@ -322,12 +289,8 @@ transition: fade
 
 <img src="https://via.placeholder.com/100x100.png?text=QR+Code" class="w-24 mx-auto mt-8 animate-pulse" />
 
-<!--
-Encourage questions via chat. Share the QR code for docs. Thank the audience: “You’ve been awesome!”
--->
 
 ---
-# Custom Styling
 <style>
 .animate-pulse {
   animation: pulse 2s infinite;
@@ -359,19 +322,3 @@ Encourage questions via chat. Share the QR code for docs. Thank the audience: �
   100% { transform: rotate(360deg); }
 }
 </style>
-
-
-```
-┌────────────┐
-│            │
-│            │
-│ Account    │
-│            │
-│            │
-┼────────────┤
-│            │
-│ CT Ext.    │
-│            │
-│            │
-└────────────┘
-```
