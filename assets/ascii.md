@@ -68,7 +68,7 @@
                 What It Does :
                      - Hides transfer amounts                                                          Mint
                      - Keeps sender/receiver public                                             ┌─────────────────┐
-                     - Optional auditor key                      Confidential mint is optional  │   Account Data  │
+                     - Optional auditor key                                Confidential mint    │   Account Data  │
                                                                                                 ├─────────────────┤
                 Workflow :                                               - confidential_mint    │     CT Ext.     │
                      1. Create mint with extension                       - confidential_burn    └─────────────────┘

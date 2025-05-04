@@ -133,28 +133,28 @@ transition: slide-up
 
 ```text
 
- Confidential Transfer
+              Confidential Transfer
 
 
-   What It Does :
-        - Hides transfer amounts                                                          Mint
-        - Keeps sender/receiver public                                             ┌─────────────────┐
-        - Optional auditor key                      Confidential mint is optional  │   Account Data  │
-                                                                                   ├─────────────────┤
-   Workflow :                                               - confidential_mint    │     CT Ext.     │
-        1. Create mint with extension                       - confidential_burn    └─────────────────┘
-        2. Configure accounts
-        3. Deposit to encrypted balance
-        4. Transfer confidentially
-        5. Apply/withdraw balance
+                What It Does :
+                     - Hides transfer amounts                                                          Mint
+                     - Keeps sender/receiver public                                             ┌─────────────────┐
+                     - Optional auditor key                                Confidential mint    │   Account Data  │
+                                                                                                ├─────────────────┤
+                Workflow :                                               - confidential_mint    │     CT Ext.     │
+                     1. Create mint with extension                       - confidential_burn    └─────────────────┘
+                     2. Configure accounts
+                     3. Deposit to encrypted balance
+                     4. Transfer confidentially
+                     5. Apply/withdraw balance
 
 
-                                Account A         1. deposit          4. withdraw      Account B
-                            ┌─────────────────┐                                    ┌─────────────────┐
-                Public Data │   Account Data  │ ───┐                          ┌──► │   Account Data  │
-                            ├─────────────────┤    │                          │    ├─────────────────┤ 3. apply_pending
-             Encrypted Data │     CT Ext.     │ ◄──┘      2. ct_transfer      └─── │     CT Ext.     │    _balance
-                            └─────────────────┘ ─────────────────────────────────► └─────────────────┘
+                                             Account A         1. deposit          4. withdraw      Account B
+                                         ┌─────────────────┐                                    ┌─────────────────┐
+                             Public Data │   Account Data  │ ───┐                          ┌──► │   Account Data  │
+                                         ├─────────────────┤    │                          │    ├─────────────────┤ 3. apply_pending
+                          Encrypted Data │     CT Ext.     │ ◄──┘      2. ct_transfer      └─── │     CT Ext.     │    _balance
+                                         └─────────────────┘ ─────────────────────────────────► └─────────────────┘
 ```
 
 
