@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: nci
 
+      - name: Replace relative urls in slides.md
+        run:  sed -i 's,./assets/,https://raw.githubusercontent.com/pupplecat/token-2022-confidential-transfer-talk/main/assets/,g' slides.md
+
       - name: Build Slidev
         run: nr build --base /${{github.event.repository.name}}/
 
