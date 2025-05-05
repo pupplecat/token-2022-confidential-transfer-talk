@@ -2,7 +2,8 @@
 
 This repository contains a Slidev presentation for demonstrating the Token2022 Confidential Transfer (CT) Extension. It explains the concepts and workflow of confidential transfers on Solana, complementing the demo repository below.
 
-**Demo Repository**: [token-2022-confidential-transfer-example](https://github.com/pupplecat/token-2022-confidential-transfer-example)
+- **Presentation**: [token-2022-confidential-transfer-talk](https://pupplecat.github.io/token-2022-confidential-transfer-talk)
+- **Demo Repository**: [token-2022-confidential-transfer-example](https://github.com/pupplecat/token-2022-confidential-transfer-example)
 
 ## Prerequisites
 
